@@ -19,5 +19,8 @@
   "homepage": "https://github.com/thegreatestgiant/webcrawler#readme",
   "devDependencies": {
     "jest": "^29.6.4"
+  },
+  "dependencies": {
+    "jsdom": "^22.1.0"
   }
 }
