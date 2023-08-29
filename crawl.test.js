@@ -1,12 +1,13 @@
 const { test, expect } = require('@jest/globals')
 const { normalizeURL, getURLsFromHTML } = require('./crawl.js')
+const sortPages = require('./report.js')
 
 // From Step 1
 test('Normalizes https and http', ()=>{
     expect(normalizeURL('http://google.com') === (normalizeURL('https://google.com'))).toBe(true)
 })
 test('Tests trailing /', () => {
-    expect(normalizeURL('https://google.com/') === (normalizeURL('https://google.com'))).toBe(true)
+    expect(normalizeURL('https://google.com/me/') === (normalizeURL('https://google.com/me'))).toBe(true)
 })
 
 // From Step 2
@@ -29,4 +30,13 @@ test('Find burried link', ()=>{
 })
 test('Find relative url from <a>',()=>{
     expect(getURLsFromHTML(`<a href="/new_page.html">`,'https://test.me').toString() === [ 'https://test.me/new_page.html' ].toString()).toBe(true)
+})
+
+// Print report tests
+test('keep order',()=>{
+    expect(JSON.stringify(sortPages({"a":3,"b":2})) === JSON.stringify({"a":3,"b":2})).toBe(true)
+})
+
+test('actually sort',()=>{
+    expect(JSON.stringify(sortPages({"a":2,"b":3})) === JSON.stringify({"b":3,"a":2})).toBe(true)
 })
